@@ -1,4 +1,4 @@
-const { add, subtract, multiply, divide } = require('../calculator');
+const { add, subtract, multiply, divide, modulo, power, squareRoot } = require('../calculator');
 
 describe('calculator functions', () => {
   test('addition: 2 + 3 = 5', () => {
@@ -51,5 +51,36 @@ describe('calculator functions', () => {
 
   test('no operands: divide returns NaN', () => {
     expect(Number.isNaN(divide())).toBe(true);
+  });
+
+  // New tests for extended operations
+  test('modulo: 5 % 2 = 1', () => {
+    expect(modulo(5, 2)).toBe(1);
+  });
+
+  test('modulo: left-associative with multiple operands', () => {
+    // ((100 % 30) % 4) => (10 % 4) = 2
+    expect(modulo(100, 30, 4)).toBe(2);
+  });
+
+  test('modulo by zero should throw', () => {
+    expect(() => modulo(10, 0)).toThrow(/Modulo by zero/);
+  });
+
+  test('power: 2 ^ 3 = 8', () => {
+    expect(power(2, 3)).toBe(8);
+  });
+
+  test('power: left-associative with multiple exponents', () => {
+    // (2 ^ 3) ^ 2 = 8 ^ 2 = 64
+    expect(power(2, 3, 2)).toBe(Math.pow(Math.pow(2, 3), 2));
+  });
+
+  test('squareRoot: sqrt(16) = 4', () => {
+    expect(squareRoot(16)).toBe(4);
+  });
+
+  test('squareRoot of negative should throw', () => {
+    expect(() => squareRoot(-9)).toThrow(/square root of negative/);
   });
 });
